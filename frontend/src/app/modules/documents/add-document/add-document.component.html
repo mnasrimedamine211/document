@@ -1,0 +1,23 @@
+<div class="addDocument">
+  <button class="backButton" [routerLink]="['../']">
+    <mat-icon>arrow_back</mat-icon>
+    <span> Back to list </span>
+  </button>
+  <div class="labelList">
+    <ng-container *ngFor="let item of labels">
+      <button
+        [style.backgroundColor]="item.color"
+        class="label"
+        (click)="applyLabel(item)"
+      >
+        {{ item.label }}
+      </button>
+    </ng-container>
+  </div>
+  <div class="text">
+    <div #textContent class="text-content" contenteditable="true">
+      {{ text }}
+    </div>
+  </div>
+  <button (click)="save()" class="actionButton">Save</button>
+</div>

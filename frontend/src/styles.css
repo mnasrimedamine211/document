@@ -1,0 +1,50 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  background-color: #1d212c;
+  color: white;
+  border-radius: 10px;
+  min-height: 35px;
+  padding: 5px;
+  min-width: 100px;
+  font-size: large;
+  font-weight: 300;
+  line-height: 0.7;
+  justify-content: center;
+}
+
+button:disabled {
+  background-color: rgba(19, 1, 1, 0.3) !important;
+  color: rgba(255, 255, 255, 0.3) !important;
+  border-color: rgba(195, 195, 195, 0.3) !important;
+}
+
+.actionButton {
+  margin-left: auto;
+  margin-top: 10px;
+}
+
+.backButton {
+
+  background: transparent;
+  border: none;
+  color: black;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+
+}

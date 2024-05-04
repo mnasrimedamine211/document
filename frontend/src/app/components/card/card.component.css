@@ -1,0 +1,49 @@
+.card {
+  width: 400px;
+  position: relative;
+}
+
+.card .label {
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: large;
+  font-weight: 300;
+  line-height: 0.7;
+  text-transform: uppercase;
+  border: none;
+  margin: 5px;
+  flex-shrink: 0;
+}
+
+.card .text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+mat-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: start;
+  padding: 10px;
+}
+
+.card .seeDetails {
+  display: flex;
+  justify-content: flex-end;
+  text-decoration: underline;
+  padding-right: 10px;
+  color: blue;
+  cursor: pointer;
+}
+
+@media (max-width: 760px) {
+  .card {
+    width: 100%;
+    max-width: 400px;
+  }
+}

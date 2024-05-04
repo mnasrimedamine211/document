@@ -1,0 +1,38 @@
+.details {
+  position: relative;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.details .labelList {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+
+.details .labelList .label {
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: large;
+  font-weight: 300;
+  line-height: 0.7;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+
+}
+
+.details .text {
+  padding: 30px 0;
+}
+
+.details .text .text-content {
+  font-size: large;
+  font-weight: 400;
+  line-height: 1.7;
+
+}

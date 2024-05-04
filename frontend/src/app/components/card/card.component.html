@@ -1,0 +1,19 @@
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>Document</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p class="text">{{ document.text }}</p>
+    <mat-divider></mat-divider>
+  </mat-card-content>
+  <mat-card-actions *ngIf="document.annotations.length > 0">
+    <div *ngFor="let item of uniqueLabels">
+      <div [style.backgroundColor]="item.color" class="label">
+        {{ item.label }}
+      </div>
+    </div>
+  </mat-card-actions>
+  <mat-card-footer>
+    <span class="seeDetails" (click)="seeDetails()"> See details</span>
+  </mat-card-footer>
+</mat-card>

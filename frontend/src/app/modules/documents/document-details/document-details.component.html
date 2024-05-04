@@ -1,0 +1,18 @@
+<div class="details">
+  <button class="backButton" [routerLink]="['../']">
+    <mat-icon>arrow_back</mat-icon>
+    <span> Back to list </span>
+  </button>
+  <div class="labelList">
+    <ng-container *ngFor="let item of uniqueLabels">
+      <button [style.backgroundColor]="item.color" class="label">
+        {{ item.label }}
+      </button>
+    </ng-container>
+  </div>
+  <div class="text">
+    <div #textContent class="text-content" contenteditable="true">
+      {{ document.text }}
+    </div>
+  </div>
+</div>

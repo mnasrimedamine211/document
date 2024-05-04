@@ -1,0 +1,108 @@
+<div class="document">
+  <mat-drawer-container
+    class="matDrawerContainer"
+    (backdropClick)="onBackdropClicked()"
+  >
+    <!-- Drawer -->
+    <mat-drawer
+      class="drawer"
+      [mode]="drawerMode"
+      [opened]="false"
+      [position]="'end'"
+      [disableClose]="true"
+      #editDrawer
+    >
+      <router-outlet></router-outlet>
+    </mat-drawer>
+    <mat-drawer-content
+      class="absolute inset-0 flex flex-col min-w-0 overflow-hidden"
+    >
+      <!-- Main actions -->
+      <div class="main-actions">
+        <div class="add-button">
+          <button (click)="createDocument()">
+            <mat-icon>add_circle_outline</mat-icon>
+            <span>Add document</span>
+          </button>
+        </div>
+        <button *ngIf="createNewDocument" (click)="showOnlyList()">
+          See list
+        </button>
+      </div>
+      <div *ngIf="createNewDocument" class="createNewDocument">
+        <form [formGroup]="documentForm" (ngSubmit)="onSubmit()">
+          <div class="title">
+            <hr />
+            <div class="text">Add your text here</div>
+          </div>
+          <mat-form-field appearance="outline" class="documentControl">
+            <mat-label>Text </mat-label>
+            <textarea
+              name="text"
+              type="text"
+              matInput
+              [formControlName]="'text'"
+            ></textarea>
+            <mat-error>Text is required</mat-error>
+          </mat-form-field>
+          <div class="title">
+            <hr />
+            <div class="text">Add labels</div>
+          </div>
+          <form [formGroupName]="'addLabels'">
+            <div class="addLabel">
+              <mat-form-field appearance="outline">
+                <mat-label> Label </mat-label>
+                <input
+                  matInput
+                  formControlName="label"
+                  placeholder="Add label"
+                />
+                <mat-error> Please enter label </mat-error>
+              </mat-form-field>
+              <button
+                class="labelAddButton"
+                (click)="addLabel($event)"
+                [disabled]="
+                  labelControls.length > colors.length ||
+                  addLabelForm.get('label')?.invalid
+                "
+              >
+                <mat-icon>add_circle_outline</mat-icon>
+              </button>
+            </div>
+            <div formArrayName="labels" class="labels-list">
+              <ng-container
+                *ngFor="let labelControl of labelControls; let i = index"
+              >
+                <mat-form-field appearance="outline" class="labelItem">
+                  <mat-label>Label {{ i }}</mat-label>
+                  <input
+                    readonly
+                    matInput
+                    [formControlName]="i"
+                    placeholder="Label"
+                  />
+                </mat-form-field>
+              </ng-container>
+            </div>
+          </form>
+          <button type="submit" class="actionButton">Create</button>
+        </form>
+      </div>
+      <div class="list-container">
+        <ng-container *ngIf="documentsList$ | async as documents">
+          <div
+            *ngIf="documents.length > 0; else noDocuments"
+            class="list-content"
+          >
+            <ng-container *ngFor="let document of documents">
+              <document-card [document]="document"></document-card>
+            </ng-container>
+          </div>
+        </ng-container>
+        <ng-template #noDocuments> No data available </ng-template>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>
