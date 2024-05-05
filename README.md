@@ -51,3 +51,5 @@ Document List: Users can view a list of documents along with their assigned labe
     python manage.py runserver
     ```
 
+### Server
+http://localhost:4200/ 
