@@ -1,7 +1,7 @@
 <div class="document">
   <mat-drawer-container
     class="matDrawerContainer"
-    (backdropClick)="onBackdropClicked()"
+
   >
     <!-- Drawer -->
     <mat-drawer
@@ -75,19 +75,30 @@
               <ng-container
                 *ngFor="let labelControl of labelControls; let i = index"
               >
-                <mat-form-field appearance="outline" class="labelItem">
-                  <mat-label>Label {{ i }}</mat-label>
-                  <input
-                    readonly
-                    matInput
-                    [formControlName]="i"
-                    placeholder="Label"
-                  />
-                </mat-form-field>
+                <div class="added-label">
+                  <mat-form-field appearance="outline" class="labelItem">
+                    <mat-label>Label {{ i }}</mat-label>
+                    <input
+                      readonly
+                      matInput
+                      [formControlName]="i"
+                      placeholder="Label"
+                    />
+                  </mat-form-field>
+                  <button class="labelAddButton" (click)="deleteLabel(i)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
               </ng-container>
             </div>
           </form>
-          <button type="submit" class="actionButton">Create</button>
+          <button
+            [disabled]="this.addLabelForm.invalid || labelControls.length <= 0"
+            type="submit"
+            class="actionButton"
+          >
+            Create
+          </button>
         </form>
       </div>
       <div class="list-container">
@@ -96,12 +107,16 @@
             *ngIf="documents.length > 0; else noDocuments"
             class="list-content"
           >
-            <ng-container *ngFor="let document of documents">
-              <document-card [document]="document"></document-card>
+            <ng-container *ngFor="let document of documents; let index = index">
+              <document-card
+                [document]="document"
+                [index]="index"
+                (seeDetailsEvent)="seeDetailsIsNavigate($event)"
+              ></document-card>
             </ng-container>
           </div>
         </ng-container>
-        <ng-template #noDocuments> No data available </ng-template>
+        <ng-template #noDocuments><!---No documents available--> </ng-template>
       </div>
     </mat-drawer-content>
   </mat-drawer-container>

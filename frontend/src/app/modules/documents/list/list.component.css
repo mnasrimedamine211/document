@@ -93,13 +93,14 @@
   width: 100%;
 }
 
-.document .addLabel {
+.document .addLabel,
+.document .labels-list .added-label {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
 }
 
-.document .addLabel .labelAddButton {
+.document .labelAddButton {
   margin-bottom: 20px;
   font-size: 24px;
   width: auto;
@@ -112,6 +113,11 @@
 
 .document .labels-list {
   margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: start;
+  gap: 8px;
 }
 
 .document .matDrawerContainer .list-container {

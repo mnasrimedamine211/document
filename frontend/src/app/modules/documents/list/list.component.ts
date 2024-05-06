@@ -46,7 +46,7 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('editDrawer', { static: true }) editDrawer!: MatDrawer;
   drawerMode: 'side' | 'over' = 'side';
   createNewDocument: boolean = false;
-  documentType!: DocumentType;
+
   documentsList$!: Observable<Document[]>;
   colors = colors;
 
@@ -69,11 +69,6 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     this.documentService.editDrawer = this.editDrawer;
-
-    this.documentType = {
-      text: '',
-      labels: [],
-    };
     this.documentsList$ = this.documentStoreService.list$;
   }
   ngOnDestroy(): void {}
@@ -100,16 +95,26 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
       this.addLabelForm.controls['label'].updateValueAndValidity();
     }
   }
+  deleteLabel(index: number) {
+    const labels = this.addLabelForm.get('labels') as FormArray;
+    labels.removeAt(index);
+  }
   createDocument() {
     this.createNewDocument = true;
   }
   showOnlyList() {
     this.createNewDocument = false;
   }
-
+  seeDetailsIsNavigate(event: Boolean) {
+    this.addLabelForm.reset();
+    this.documentForm.reset();
+    this.createNewDocument = false;
+    this._changeDetectorRef.markForCheck();
+  }
   onSubmit() {
     if (this.labelControls.length <= 0) {
       this.addLabelForm.markAllAsTouched();
+      return;
     } else if (this.labelControls.length > 0) {
       this.addLabelForm.controls['label'].clearValidators();
       this.addLabelForm.controls['label'].updateValueAndValidity();
@@ -120,24 +125,30 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.documentForm.invalid) return;
     const {
       text,
-      addLabels: { labels },
+      addLabels: { label, labels },
     } = this.documentForm.value;
 
+    let documentType: DocumentType = { text: '', labels: [] };
     if (labels.length > 0) {
       labels.map((label: string) => {
         const newLabel: Label = {
           label: label,
           color: getRandomColor(),
         };
-        this.documentType.labels.push(newLabel);
+
+        documentType.labels.push(newLabel);
       });
     }
-    this.documentType.text = text;
-    this.documentStoreService.documentType = this.documentType;
+
+    documentType.text = text;
+    this.documentStoreService.documentType = documentType;
 
     this._router
       .navigate(['./', 'add'], { relativeTo: this._activatedRoute })
       .then(() => {});
+    const labelsArray = this.addLabelForm.get('labels') as FormArray;
+    labelsArray.clear();
+    this.addLabelForm.reset();
     this.documentForm.reset();
     this.createNewDocument = false;
     this._changeDetectorRef.markForCheck();

@@ -1,5 +1,5 @@
 import { DocumentStoreService } from './../../modules/documents/common/services/document-store.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
@@ -21,6 +21,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class CardComponent implements OnInit {
   @Input() document!: Document;
+  @Input() index: number = 1;
+  @Output() seeDetailsEvent = new EventEmitter<boolean>(false);
   uniqueLabels: Annotation[] = [];
   constructor(
     private documentStoreService: DocumentStoreService,
@@ -41,6 +43,7 @@ export class CardComponent implements OnInit {
   }
   seeDetails() {
     this.documentStoreService.document = this.document;
+    this.seeDetailsEvent.emit(true);
     this._router
       .navigate(['./', 'details'], { relativeTo: this._activatedRoute })
       .then(() => {});

@@ -33,8 +33,12 @@ export class AddDocumentComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private snackBar: MatSnackBar
   ) {
-    this.text = this.documentStoreService.documentType.text;
-    this.labels = this.documentStoreService.documentType.labels;
+    this.text = this.documentStoreService.documentType
+      ? this.documentStoreService.documentType?.text
+      : '';
+    this.labels = this.documentStoreService.documentType
+      ? this.documentStoreService.documentType?.labels
+      : [];
   }
 
   ngOnInit(): void {
@@ -46,6 +50,8 @@ export class AddDocumentComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.documentService.closeEditDrawer().then(() => true);
+    this.documentStoreService.documentType = { text: '', labels: [] };
+    this.documentStoreService.document = { text: '', annotations: [] };
   }
 
   applyLabel(label: Label): void {
@@ -111,6 +117,7 @@ export class AddDocumentComponent implements OnInit, AfterViewInit, OnDestroy {
             setTimeout(() => {
               this.router.navigateByUrl('/');
             }, 1000);
+
           },
           error: (error) => {
             this.openSnackBar(error.toString(), 'x');
