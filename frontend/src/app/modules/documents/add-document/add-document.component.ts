@@ -113,17 +113,18 @@ export class AddDocumentComponent implements OnInit, AfterViewInit, OnDestroy {
         )
         .subscribe({
           next: () => {
+            this.exportToJson();
             this.openSnackBar('The document is added', 'x');
             setTimeout(() => {
               this.router.navigateByUrl('/');
             }, 1000);
 
           },
-          error: (error) => {
+          error: (error: { toString: () => string; }) => {
             this.openSnackBar(error.toString(), 'x');
           },
         });
     }
-    //this.exportToJson();
+
   }
 }
